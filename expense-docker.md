@@ -34,3 +34,5 @@ ADD scripts/*.sql /docker-entrypoint-initdb.d
 * list databases: `show databases;`
 * select database: `use transactions;`
 * list tables: `show tables;` 
+
+Here, sql commands are typically used in sequence to first check what databases are available, then select a specific database, and finally view the tables within that database.
