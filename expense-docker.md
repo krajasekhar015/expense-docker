@@ -22,9 +22,9 @@ ADD scripts/*.sql /docker-entrypoint-initdb.d
 * `FROM` instruction will pull mysql:8.0 from docker hub
 * `ENV` instruction will set root password of mysql server
 * `ADD` instruction will copy the script from local to the specified location
-        * It will create a schema with name `transactions`
-        * Creates a user with name `expense`
-        * Sets password for expense user as `ExpenseApp@1`
+    * It will create a schema with name `transactions`
+    * Creates a user with name `expense`
+    * Sets password for expense user as `ExpenseApp@1`
 
 **After writing Dockerfile run the follwing commands**
 * build docker image: `docker build -t mysql:v1 .` 
