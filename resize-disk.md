@@ -15,11 +15,15 @@ Here,
 * `/dev/nvme0n1` specifies the disk where the partition you want to resize is located. `nvme0n1` indicates the first NVMe disk. NVMe (Non-Volatile Memory Express) is a high-speed interface used for SSDs
 * `4` specifies the partition number you want to resize. In this case, it is the fourth partition on the specified disk to use the remaining unallocated space on the disk.
 
+> Here, the unallocated memory will be allocated to partition_4 in disk_1
+
 **Extend the Logical Volumes** <br>
 Decide how much space to allocate to each logical volume. For example, to extend both the root and /var logical volumes:
 
 ```
 sudo lvextend -l +50%FREE /dev/RootVG/rootVol
+```
+```
 sudo lvextend -l +50%FREE /dev/RootVG/varVol
 ```
 Here,
