@@ -18,8 +18,9 @@ If we check the network interfaces on the system using `ifconfig`, we will get d
 
 ![alt text](images/ifconfig.png)
 
-**1. docker0**:<br>
-**Type:** Virtual Network Interface
+**1. docker0**
+
+**Type:** Virtual Network Interface <br>
 **Description:** 
 * This is a bridge network interface created by Docker. It allows containers to communicate with each other and with the host system
 * Containers connected to this bridge can access the internet through the host's network
