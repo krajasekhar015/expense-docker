@@ -2,7 +2,7 @@ Using docker containers, we will run our `expense` project
 
 * Here, we don't need to install mysql (database), nodejs (backend) and nginx (frontend) servers. We will take official image from dockerhub.
 
-## MySQL 
+## MySQL (Database)
 * Here we will use mysql server official image of version 8.0
 * We can run few sql commands to configure the server 
     * Here we will use backend to connect to mysql server and run the queries
@@ -36,3 +36,5 @@ ADD scripts/*.sql /docker-entrypoint-initdb.d
 * list tables: `show tables;` 
 
 Here, sql commands are typically used in sequence to first check what databases are available, then select a specific database, and finally view the tables within that database.
+
+## NodeJS (Backend)
