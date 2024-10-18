@@ -46,3 +46,12 @@ Here,
 * `xfs_growfs` is the command specifically designed to grow (extend) an XFS filesystem. XFS is a high-performance filesystem commonly used in enterprise environments
 * `/` and `/var`: This indicates the mount point of the filesystem you want to extend
     * In this case, `/` refers to the root filesystem and `/var` is usually a directory that contains variable data such as logs, databases, and temporary files
+
+**Checking Disk Space Usage**
+```
+df -hT
+```
+Here,
+* `df` stands for `disk free`. It's a command that shows the amount of disk space used and available on filesystems
+* `-h` stands for `human-readable`. It formats the sizes in a more readable way, using units like kilobytes (K), megabytes (M), gigabytes (G), etc.,
+* `-T` shows the `filesystem type` for each entry. This helps you understand what kind of filesystem is being used (e.g., ext4, xfs, nfs)
