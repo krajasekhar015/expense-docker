@@ -15,7 +15,7 @@ Here,
 * `/dev/nvme0n1` specifies the disk where the partition you want to resize is located. `nvme0n1` indicates the first NVMe disk. NVMe (Non-Volatile Memory Express) is a high-speed interface used for SSDs
 * `4` specifies the partition number you want to resize. In this case, it is the fourth partition on the specified disk to use the remaining unallocated space on the disk.
 
-**Extend the Logical Volumes**
+**Extend the Logical Volumes** <br>
 Decide how much space to allocate to each logical volume. For example, to extend both the root and /var logical volumes:
 
 ```
@@ -27,7 +27,7 @@ Here,
 * `-l +50%FREE`: Here `-l` option specifies the size to which the logical volume should be extended in terms of logical extents and `+50%FREE` argument means that the logical volume should be extended by 50% of the free space available in the volume group
 * `/dev/RootVG/rootVol` specifies the path to the logical volume that you want to extend. In this case, `RootVG` is the name of the volume group, and `rootVol` is the name of the logical volume
 
-**Re-size the filesystems**
+**Re-size the filesystems** <br>
 After extending the logical volumes, resize the filesystems to utilize the additional space.
 
 For the **root filesystem**:
