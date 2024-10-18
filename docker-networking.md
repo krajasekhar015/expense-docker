@@ -33,15 +33,15 @@ If we check the network interfaces on the system using `ifconfig`, we will get d
 **2. ens5** `Physical or virtual interface used for external network communication`
 
 **Type:** 
-* Physical or Virtual Network Interface 
+Physical or Virtual Network Interface 
 
 **Description:** 
-* Every VM's will get internet access through Ethernet from AWS ISP. Here, `ens5` is the network provided by AWS ISP
+Every VM's will get internet access through Ethernet from AWS ISP. Here, `ens5` is the network provided by AWS ISP
 
 **3. lo (Loopback)** `Loopback interface for internal communication within the host`
 
 **Type:** 
-* Virtual Network Interface
+Virtual Network Interface
 
 **Description**
-* The loopback interface is a special virtual interface used for internal communication within the host 
+The loopback interface is a special virtual interface used for internal communication within the host 
