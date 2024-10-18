@@ -20,7 +20,8 @@ If we check the network interfaces on the system using `ifconfig`, we will get d
 
 **1. docker0** `Virtual bridge for Docker containers to communicate with each other and the host`
 
-**Type:** Virtual Network Interface <br>
+**Type:** 
+* Virtual Network Interface
 **Description:** 
 * Here, docker creates seperate virtual network interface i.e., `docker0`
 * `docker0` provides ip address to the containers which is called `bridge network`
@@ -30,12 +31,14 @@ If we check the network interfaces on the system using `ifconfig`, we will get d
 
 **2. ens5** `Physical or virtual interface used for external network communication`
 
-**Type:** Physical or Virtual Network Interface <br>
+**Type:** 
+* Physical or Virtual Network Interface
 **Description:** 
 * Every VM's will get internet access through Ethernet from AWS ISP. Here, `ens5` is the network provided by AWS ISP
 
 **3. lo (Loopback)** `Loopback interface for internal communication within the host`
 
-**Type:** Virtual Network Interface <br>
+**Type:** 
+* Virtual Network Interface
 **Description**
 * The loopback interface is a special virtual interface used for internal communication within the host 
