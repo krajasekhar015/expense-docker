@@ -38,3 +38,5 @@ ADD scripts/*.sql /docker-entrypoint-initdb.d
 Here, sql commands are typically used in sequence to first check what databases are available, then select a specific database, and finally view the tables within that database.
 
 ## NodeJS (Backend)
+* Here we will use nodejs server official image of version 8.0
+* We need to download our code from ```https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip```
