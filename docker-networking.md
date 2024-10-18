@@ -1,6 +1,6 @@
 ## Docker Networking
-
 **Home Network**
+
 ![alt text](images/docker-network.drawio.svg)
 
 * Here, Internet Service Provider (ISP) will provide internet to home router.
@@ -15,7 +15,9 @@ ISP provides `public IP address` (External) and `private IP address` (Internal) 
 **Docker Network**
 
 If we check the network interfaces on the system using `ifconfig`, we will get different network interfaces on a Linux system like `docker0`, `ens5`, and `lo`
+
 ![alt text](images/ifconfig.png)
+
 **1. docker0**:
 Type: Virtual Network Interface
 Description: 
