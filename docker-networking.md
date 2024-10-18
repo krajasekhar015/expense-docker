@@ -43,5 +43,5 @@ Every VM's will get internet access through Ethernet from AWS ISP. Here, `ens5` 
 **Type:** 
 Virtual Network Interface
 
-**Description**
+**Description:**
 The loopback interface is a special virtual interface used for internal communication within the host 
