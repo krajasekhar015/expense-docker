@@ -20,8 +20,8 @@ If we check the network interfaces on the system using `ifconfig`, we will get d
 
 **1. docker0** `Virtual bridge for Docker containers to communicate with each other and the host`
 
-**Type:** 
-* Virtual Network Interface
+**Type:**
+Virtual Network Interface
 
 **Description:** 
 * Here, docker creates seperate virtual network interface i.e., `docker0`
@@ -29,6 +29,9 @@ If we check the network interfaces on the system using `ifconfig`, we will get d
 * It allows containers to communicate with each other and with the host system
 * It acts as modem to the containers inside VM
 * Containers connected to this bridge can access the internet through the host's network. 
+
+**Explanation:**
+* Suppose, if we create a container then docker0 will give IP address to that container 
 
 **2. ens5** `Physical or virtual interface used for external network communication`
 
@@ -45,3 +48,39 @@ Virtual Network Interface
 
 **Description:**
 The loopback interface is a special virtual interface used for internal communication within the host 
+
+## IP Address Assignment for docker0
+
+The IP address for the `docker0` interface is assigned by Docker itself during the initialization of the Docker daemon. Specifically, Docker configures the docker0 bridge network with a default subnet (commonly 172.17.0.0/16) and assigns the IP address 172.17.0.1 to the docker0 interface
+
+**Assignment Process**
+
+**1. Docker Daemon Startup:**
+When you install Docker and start the Docker daemon (`dockerd`), it automatically creates the `docker0` bridge network interface if it doesn't already exist.
+
+**2. Default Configuration:**
+Docker has a default IP address range it uses for the docker0 interface, typically `172.17.0.1` with a subnet mask of `255.255.0.0`. This configuration allows Docker to allocate IP addresses to containers connected to this bridge.
+
+**3. IP Address Allocation:**
+The Docker daemon automatically selects an available IP address from the predefined subnet for the `docker0` interface.
+
+**4. Dynamic Configuration:**
+If you wish to customize the IP address or subnet for the docker0 interface, you can do so by modifying the Docker daemon’s configuration file (e.g., `/etc/docker/daemon.json`) before starting the Docker service.
+
+Example of a configuration to change the default subnet:
+```
+{
+  "bip": "172.26.0.1/16"
+}
+```
+
+**5. Dynamic Management:**
+Docker’s internal DHCP server manages the IP address allocation for containers connected to this bridge network, assigning them unique IP addresses within the `docker0` subnet.
+
+**Summary**
+The Docker daemon is responsible for creating the docker0 interface and assigning its IP address when it starts. This allows it to manage IP address allocation for containers connected to the bridge network
+
+
+## Types of Docker Networking
+1. Host Network
+2. Bridge Network 
