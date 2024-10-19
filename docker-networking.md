@@ -89,6 +89,8 @@ The Docker daemon is responsible for creating the docker0 interface and assignin
 
 ![alt text](images/networks.png)
 
+* In the above snapshot, we cannot see overlay network because overlay network is communication between multiple hosts. Here in snapshot, it is within the host.
+
 **1. Host Network**
 A `host network` in Docker is a networking mode that allows docker containers to share the host's networking stack. When a container is run in host mode, it does not get its own network namespace; instead, it uses the host's network interfaces directly
 
@@ -99,4 +101,43 @@ A `host network` in Docker is a networking mode that allows docker containers to
     * frontend --> 80
 
 > When specific port is opened in a server, same port cannot be used by another container in that server. Since containers are using host network, they should run on different ports.
+
+*Assigning Host Network to a container:*
+```
+docker run -d --name containername --network host imagename:version
+```
+
+*Check Whether the port is opened or not:*
+```
+sudo netstat -lntp
+```
+
+*Check Container Full Details:*
+```
+docker inspect containername
+```
+* Here, we can see that no IP is allocated to this container, since we have created in host network.
+
+* In backend, we use `ENV DB_HOST="mysql"` but it won't work in host network, since it is of bridge network. When we run the backend we will get an error. Here, bridge network connects with the container names but not the host network
+* So, we need to give `ENV DB_HOST="localhost"` since this is the communication between two services within same server
+
+**Disadvantages**
+* There is no isolated network for docker containers
+
+> We need to remember that Container ports are not host ports, they are logical ports
+
+**2. Bridge Network**
+
+
+* In default network, there will be no DNS componets.
+* Here, we won't use default bridge network. We will create one bridge network
+```
+docker network create expense
+```
+
+![alt text](images/bridge-network.png)
+
+Now, if we run containers, we can see the IP address of the container allocated through bridge network
+
+* When we run frontend, we need to expose the port in command
 
