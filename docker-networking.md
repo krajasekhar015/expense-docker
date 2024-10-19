@@ -83,4 +83,20 @@ The Docker daemon is responsible for creating the docker0 interface and assignin
 
 ## Types of Docker Networking
 1. Host Network
-2. Bridge Network 
+2. Bridge Network (Default docker network)
+3. Overlay Network (Communication between multiple docker hosts)
+   * Overlay networks are designed to allow communication between containers that are running on different Docker hosts
+
+![alt text](images/networks.png)
+
+**1. Host Network**
+A `host network` in Docker is a networking mode that allows docker containers to share the host's networking stack. When a container is run in host mode, it does not get its own network namespace; instead, it uses the host's network interfaces directly
+
+* Containers which are running on host network will not get ip address i.e., containers are sharing host IP address
+* Containers on host network will open host ports
+    * mysql --> 3306
+    * backend --> 8080
+    * frontend --> 80
+
+> When specific port is opened in a server, same port cannot be used by another container in that server. Since containers are using host network, they should run on different ports.
+
