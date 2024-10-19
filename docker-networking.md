@@ -130,7 +130,7 @@ docker inspect containername
 **2. Bridge Network**
 
 
-* In default network, there will be no DNS componets.
+* In default network, DNS doesn't works internally. It doesn't have any components related to DNS
 * Here, we won't use default bridge network. We will create one bridge network
 ```
 docker network create expense
@@ -141,4 +141,9 @@ docker network create expense
 Now, if we run containers, we can see the IP address of the container allocated through bridge network
 
 * When we run frontend, we need to expose the port in command
+
+**3. Overlay Network** 
+* One network doesn't enough for us, so sometimes we have to use multiple networks 
+* Two containers in two different networks can connect and communicate through modem 
+* Keeping docker in multiple networks is risky, so for this we need orchestration 
 
