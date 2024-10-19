@@ -120,6 +120,7 @@ docker inspect containername
 
 * In backend, we use `ENV DB_HOST="mysql"` but it won't work in host network, since it is of bridge network. When we run the backend we will get an error. Here, bridge network connects with the container names but not the host network
 * So, we need to give `ENV DB_HOST="localhost"` since this is the communication between two services within same server
+* When we run frontend, we may not expose the port numbers since it is not an container network
 
 **Disadvantages**
 * There is no isolated network for docker containers
