@@ -30,7 +30,7 @@ services:
     image: joindevops/mysql:v1
     container_name: mysql 
     volumes:
-    - mysql:/var/lib/mysql # -v mysql:/var/lib/mysql
+    - mysql:/var/lib/mysql 
   backend:
     image: joindevops/backend:v1
     container_name: backend
@@ -57,7 +57,40 @@ services:
      * `image` should be pulled from docker hub. For this, we need to push our images to our docker hub using tagging and from there we will pull those images
      * `container_name` is equivalent to `--name mysql`
      * `depends_on` specifies the dependency in which *backend is depending on mysql* and *frontend is depending on backend*
-     * `volumes` 
+     * `volumes` specifies mapping of volumes 
          * Here, `mysql` service uses a named volume mysql which is mounted to `/var/lib/mysql` inside the container to store MYSQL data persistently
+             * To know the path where mysql data is stored, we need to refer official image of mysql by searching `-v`
+         * It is equivalent to the command `-v mysql:/var/lib/mysql`
      * `ports` 
          * Here, `frontend` service exposes port 80 (HTTP) to the host (Maps host port 80 to container port 80)
+
+  **Command to run docker-compose file**
+  ```
+  docker compose up -d
+  ```
+  Here, it will create all the containers 
+    * First it will create mysql since backend is depending on mysql
+    * Then it will create backend since frontend is depending on backend
+        * Here, it will take time to create backend. Because first mysql will create then immediately backend will create and there is no time for backend to connect to mysql due to creation of schema's etc., 
+        * So, backend has to delay some time to connect to mysql. For this we need to override command
+            * command: `sh -c "sleep 5 && node /opt/server/index.js"`
+            * Here, we are telling sleep for 5 seconds and run index.js file in specified path
+    * At last, it will create frontend container
+
+  * command to down docker compose
+  ```
+  docker compose down
+  ```
+  Here, it will remove containers in reverse order. 
+     * First it will remove frontend, then backend and at last mysql 
+
+**Advantages of Docker Compose**
+1. You can manage the services with dependencies 
+2. You can manage all the services at-a-time with a single command
+3. It is easy to manage multiple containers in an application
+
+**Note:**
+* When we run docker containers inside docker server/host, we will face problems
+   * We can use the docker for building the images
+   * But running containers, docker is not scalable
+* In real-world projects, we build images using docker and we run the containers using kubernetes
