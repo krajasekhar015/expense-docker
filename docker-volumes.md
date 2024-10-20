@@ -34,7 +34,7 @@ Now, if we browse the IP address, we can access hello.html page. Then delete the
 ```
 docker rm -f containerid
 ```
-Now, again execute `docker run -d -p -v /home/ec2-user/nginx-data/:/usr/share/nginx/html` command and if we browse it we can still access the hello.html page. Because it is mounted in host path
+Now, again execute `docker run -d -v /home/ec2-user/nginx-data/:/usr/share/nginx/html -p 80:80 nginx` command and if we browse it we can still access the hello.html page. Because it is mounted in host path
 
 Now, go to path `/home/ec2-user/nginx-data/` and create a volume.html file using echo command
 ```
@@ -46,4 +46,33 @@ If we access the container IP address in the browser, we can see this page
 * Unnamed volumes are not in the docker control. We have to manage the directory and its related data, permissions etc
 
 **2. Named Volumes**
+* Here, we create docker volumes with the help of docker commands
+* Use the following command to see list of commands to create and manage docker volumes
+```
+docker volume --help
+```
+* Using docker commands we can manage the life-cycle of the volumes
 
+* Create a docker volume
+```
+docker volume create volumename
+```
+* Listing the docker volumes
+```
+docker volume ls
+```
+Here, we can see volumes with some random names which is difficult to understand 
+   * But, using proper-naming convention we have created our docker volume
+
+* If we inspect the docker volume, we can see the location where volume is mounted on host path
+```
+docker inspect volumename
+``` 
+
+* It is better to have docker volumes under the control of docker. It is recommended to use named volumes instead of un-named volumes
+
+```
+docker run -d -v nginx-html:/usr/share/nginx/html -p 80:80 nginx
+```
+
+> If we remove the container, volume won't get deleted
