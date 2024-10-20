@@ -30,8 +30,20 @@ docker exec -it containerid bash
 ```
 echo "Hello Docker volumes" > hello.html
 ```
-Now, if we browse the IP address, we will get this page. Then delete the container
+Now, if we browse the IP address, we can access hello.html page. Then delete the container
 ```
 docker rm -f containerid
 ```
- 
+Now, again execute `docker run -d -p -v /home/ec2-user/nginx-data/:/usr/share/nginx/html` command and if we browse it we can still access the hello.html page. Because it is mounted in host path
+
+Now, go to path `/home/ec2-user/nginx-data/` and create a volume.html file using echo command
+```
+echo "<h1>Hello, this is from host storage</h1>" > volume.html
+```
+If we access the container IP address in the browser, we can see this page
+
+* So, by this we can persist the data instead of loosing it 
+* Unnamed volumes are not in the docker control. We have to manage the directory and its related data, permissions etc
+
+**2. Named Volumes**
+
