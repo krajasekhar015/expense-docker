@@ -26,29 +26,62 @@ Distroless images contain only your application and its runtime dependencies, wi
 **After Best-Practices:**
 - `FROM node:20.18.0-alpine3.20`
 
-**2. Optimize Image Size**
+* After changing the base image, we need to test it using `docker compose up -d` command. If the image_id get changed, then the docker compose will re-run everthing
+
+**2. Avoid using the latest Tag**
+
+- **Version Tagging:** Tag images with version numbers `(e.g., myapp:1.0)` instead of just using `latest` to avoid ambiguity (refers to lack of clarity about which version of an application is being used or deployed when you rely on tags like `latest`) and ensure consistency across deployments.
+
+**3. Avoid Running Containers as Root**
+
+- **Non-Root User:** For security reasons, it’s best not to run containers as the root user. Create and run containers with a non-root user to reduce the risk of security issues. You can add a user in the Dockerfile using `RUN useradd -m myuser` and switch to that user with `USER myuser`.
+
+**Explanation:**
+1. pwd --> /home/ec2-user
+2. create a file: 
+```
+touch high-confidential 
+```
+3. Enter some data in high-confidential file 
+```
+vim touch-confidential 
+```
+Let the data as `secrets`
+```
+4. Run nginx by mounting source root directory to /spam directory in container 
+```
+docker run -d -v /:/spam nginx 
+```
+5. Check the containers
+``` 
+docker ps 
+```
+6. Now login to nginx container  
+```
+docker exec -it <container-id> bash 
+```
+Follow the below commands in sequence
+-> ls -l
+-> cd /spam /
+-> ls -l 
+-> cd home/
+-> cd ec2-user/
+-> ls -l 
+-> cat high-confidential
+
+So, here we can see the confidential files using root access.
+
+
+**4. Optimize Image Size**
 
 - **Multi-Stage Builds:** Use multi-stage builds to minimize the final image size by separating the build and production phases which includes only necessary components. It will make your Docker image `smaller` and more `efficient` 
 - **Remove Unnecessary Files:** Clean up package lists, cache files, and other unnecessary files to keep the image lean.
 
-**3. Tag Images Properly**
-
-- **Version Tagging:** Tag images with version numbers `(e.g., myapp:1.0)` instead of just using `latest` to avoid ambiguity (refers to lack of clarity about which version of an application is being used or deployed when you rely on tags like `latest`) and ensure consistency across deployments.
-
-**4. Manage Secrets Securely**
-
-- **Environment Variables:** Avoid hardcoding secrets/settings in your Dockerfile or image. Use environment variables or Docker secrets for sensitive information. This makes your image flexible and easier to use in different environments without needing to change the Dockerfile.
-- **Docker Secrets:** Utilize Docker Swarm or Kubernetes secrets management for secure storage and usage of sensitive data.
-
-> We will use in Kubernetes
 
 **5. Use Dockerignore**
 
 - **.dockerignore File:** `.dockerignore` file tells Docker which files to ignore during the build process. So, include a `.dockerignore` file to prevent unnecessary files and directories from being added to the build context. This helps to keep your image smaller and speeding up the build process and keeping the image clean.
 
-**6. Avoid Running Containers as Root**
-
-- **Non-Root User:** For security reasons, it’s best not to run containers as the root user. Create and run containers with a non-root user to reduce the risk of security issues. You can add a user in the Dockerfile using `RUN useradd -m myuser` and switch to that user with `USER myuser`.
 
 **7. Optimize Layer Caching**
 
@@ -63,6 +96,24 @@ Distroless images contain only your application and its runtime dependencies, wi
 
 - **Volumes:** Use Docker volumes to persist data outside of the container’s filesystem, ensuring data is not lost when the container is removed or updated.
 - **Bind Mounts:** Use bind mounts for development to sync code changes in real-time.
+
+
+
+
+
+
+
+**14. Automated Builds and CI/CD Integration**
+
+- **CI/CD Pipelines:** Integrate Docker builds into your CI/CD pipelines to automate testing, building, and deployment of images.
+- **Automated Tests:** Write and run automated tests to validate your Docker images before deploying them.
+
+**15. Documentation and Comments**
+
+- **Document Dockerfiles:** Comment and document your Dockerfiles to explain the purpose of each instruction, making it easier for others to understand and maintain.
+
+**Other Best Practices**
+These are other best practices we can take care of at orchestration level
 
 **10. Limit Container Resources**
 
@@ -83,13 +134,10 @@ Distroless images contain only your application and its runtime dependencies, wi
 - **Minimal Privileges:** Grant the minimum necessary privileges to your containers.
 - **Regular Updates:** Regularly update base images and dependencies to mitigate vulnerabilities.
 
-**14. Automated Builds and CI/CD Integration**
+**4. Manage Secrets Securely**
 
-- **CI/CD Pipelines:** Integrate Docker builds into your CI/CD pipelines to automate testing, building, and deployment of images.
-- **Automated Tests:** Write and run automated tests to validate your Docker images before deploying them.
+- **Environment Variables:** Avoid hardcoding secrets/settings in your Dockerfile or image. Use environment variables or Docker secrets for sensitive information. This makes your image flexible and easier to use in different environments without needing to change the Dockerfile.
+- **Docker Secrets:** Utilize Docker Swarm or Kubernetes secrets management for secure storage and usage of sensitive data.
 
-**15. Documentation and Comments**
-
-- **Document Dockerfiles:** Comment and document your Dockerfiles to explain the purpose of each instruction, making it easier for others to understand and maintain.
 
 By following these best practices, you can ensure that your Docker containers are secure, efficient, and maintainable.
