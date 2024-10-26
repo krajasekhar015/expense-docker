@@ -4,7 +4,8 @@ Docker has simplified building and deploying applications using containers. To g
 
 **1. Use Official and Lightweight Base Images**
 
-*** Official Images:** Always start with trusted, official images from Docker Hub for enhanced security. For better performance, choose lightweight/minimal-base images like `alpine` instead of larger ones like ubuntu. This helps keep your images smaller and faster.
+* Official Images: Always start with trusted, official images from Docker Hub for enhanced security. 
+* Minimal Base Images: For better performance, choose lightweight/minimal-base images like `alpine` instead of larger ones like ubuntu. This helps keep your images smaller and faster.
 
 **2. Optimize Image Size**
 
