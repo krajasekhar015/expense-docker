@@ -46,8 +46,6 @@ touch high-confidential
 ```
 vim touch-confidential 
 ```
-Let the data as `secrets`
-```
 4. Run nginx by mounting source root directory to /spam directory in container 
 ```
 docker run -d -v /:/spam nginx 
