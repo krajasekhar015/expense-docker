@@ -21,6 +21,8 @@ Docker has simplified building and deploying applications using containers. To g
 - **Environment Variables:** Avoid hardcoding secrets/settings in your Dockerfile or image. Use environment variables or Docker secrets for sensitive information. This makes your image flexible and easier to use in different environments without needing to change the Dockerfile.
 - **Docker Secrets:** Utilize Docker Swarm or Kubernetes secrets management for secure storage and usage of sensitive data.
 
+> We will use in Kubernetes
+
 **5. Use Dockerignore**
 
 - **.dockerignore File:** `.dockerignore` file tells Docker which files to ignore during the build process. So, include a `.dockerignore` file to prevent unnecessary files and directories from being added to the build context. This helps to keep your image smaller and speeding up the build process and keeping the image clean.
