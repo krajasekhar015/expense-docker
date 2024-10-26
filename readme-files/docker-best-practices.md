@@ -20,6 +20,11 @@ Distroless images contain only your application and its runtime dependencies, wi
     - **Debian Slim:** A smaller version of the Debian image. <br>
     - **Ubuntu Minimal:** A stripped-down version of the standard Ubuntu image. <br>
 
+**Before Best-Practices:**
+- `FROM node:20`
+
+**After Best-Practices:**
+- `FROM node:20.18.0-alpine3.20`
 
 **2. Optimize Image Size**
 
