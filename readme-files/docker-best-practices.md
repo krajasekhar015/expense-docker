@@ -7,7 +7,7 @@ Docker has simplified building and deploying applications using containers. To g
 - **Official Images:** Always start with trusted, official images from Docker Hub for enhanced security. 
 - **Minimal Base Images:** For better performance, choose lightweight/minimal-base images like `alpine` instead of larger ones like ubuntu. This helps keep your images smaller and faster.
 
-**some common options for lightweight Docker images:**
+**some common options for lightweight Docker images:** <br>
 **1. Alpine Linux:** Alpine is a minimal Docker image based on Alpine Linux, which is designed to be small and secure. Size is typically around 5 MB. Commonly used as a base image for many applications.
 **2. BusyBox:** BusyBox combines tiny versions of many common UNIX utilities into a single small executable. Size is usually around 1 MB. Ideal for simple scripts and minimal utilities.
 **3. Scratch:** Scratch is the most minimal image possible—it is essentially empty. It is often used for statically compiled binaries. Size is 0 MB (no layers). Best for Go applications or other statically linked binaries.
