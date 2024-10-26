@@ -59,13 +59,13 @@ docker ps
 docker exec -it <container-id> bash 
 ```
 Follow the below commands in sequence
--> ls -l
--> cd /spam /
--> ls -l 
--> cd home/
--> cd ec2-user/
--> ls -l 
--> cat high-confidential
+- ls -l
+- cd /spam /
+- ls -l 
+- cd home/
+- cd ec2-user/
+- ls -l 
+- cat high-confidential
 
 So, here we can see the confidential files using root access.
 
