@@ -42,3 +42,13 @@ Docker’s architecture has several key components that work together to manage 
  Containers are lightweight and share the host OS, reducing overhead and making them faster than traditional VMs.
 - **Scalability:** <br>
  Docker integrates well with tools like Kubernetes, making it easier to scale applications across multiple servers.
+
+**Disadvantages of Docker:** <br>
+- There is no reliability since there is only one docker host 
+- There is no autoscaling 
+- There is no load balancing 
+- Volumes are inside docker host -> poor volume management 
+- No secret management --> no security 
+- No communication between containers or in another docker host -> network management is not good 
+
+so, due to these disadvantages, Orchestration comes into picture 
