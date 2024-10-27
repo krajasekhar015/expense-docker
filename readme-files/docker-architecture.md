@@ -7,6 +7,8 @@ Unlike virtual machines (VMs), containers share the host system’s operating sy
 **Key Components of Docker Architecture:**
 Docker’s architecture has several key components that work together to manage containers. Here’s a closer look at each part:
 
+![alt text](../images/docker-architecture.gif)
+
 - **Docker Client** <br>
  The Docker Client is the interface that users interact with. Whenever you type a Docker command (docker run, docker build, etc.), the client communicates with the Docker Daemon to perform actions like building, starting, or stopping containers.
 
