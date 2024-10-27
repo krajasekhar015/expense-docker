@@ -67,75 +67,122 @@ Follow the below commands in sequence
 - ls -l 
 - cat high-confidential
 
-So, here we can see the confidential files using root access.
+**Conclusion:**
+- It means, a container running with root access and there is a chance to access the host file system.
+- One host consists of no.of containers. Ultimately containers data is in host 
+- If we given root access to any container then it can access the other containers and also host confidential information
+- So, this is a severe security issues. Because of this, we shouldn't run the containers with root access 
 
+> When we use alpine image, we should use `docker exec -it <container-id> sh` Here `bash` won't work
 
-**4. Optimize Image Size**
+**Note:**
+Before the `CMD` instruction we need to give `USER` instruction  
 
-- **Multi-Stage Builds:** Use multi-stage builds to minimize the final image size by separating the build and production phases which includes only necessary components. It will make your Docker image `smaller` and more `efficient` 
-- **Remove Unnecessary Files:** Clean up package lists, cache files, and other unnecessary files to keep the image lean.
-
-
-**5. Use Dockerignore**
-
-- **.dockerignore File:** `.dockerignore` file tells Docker which files to ignore during the build process. So, include a `.dockerignore` file to prevent unnecessary files and directories from being added to the build context. This helps to keep your image smaller and speeding up the build process and keeping the image clean.
-
-
-**7. Optimize Layer Caching**
+**4. Optimize Layer Caching**
 
 - **Layer Order:** Order your Dockerfile instructions to maximize layer caching. Frequently changing commands should be at the end of the Dockerfile.
 - **Combine Commands:** Combine commands where possible to reduce the number of layers, but balance it with readability.
 
-**8. Leverage Health Checks**
+**Explanation**
+- Docker images are layer based and immutable in nature
 
-- **Healthcheck:** Define HEALTHCHECK instructions in your Dockerfile to allow Docker to monitor the health of your application and take action if it becomes unhealthy.
+- Set the environment variable `DOCKER_BUILDKIT` to 0 
+```
+export DOCKER_BUILDKIT=0
+```
+- After setting environment variable, now build the image
+- Now, from the first instruction `FROM:node`, it will pull image from the docker hub
+- Then docker will creates a container from the first instruction and runs second instruction `EXPOSE 8080` inside it (Let it be C1 container)
+    - Once 2nd instruction runs, it will create a image from this container (Let it be I1 image) and the container gets removed after performing this step
+- Now, docker creates a container from I1 image (Let it be C2 container)
+    - Then third instruction `ENV DB_HOST="mysql"` runs inside C2 container
+    - Now, docker will create a image from C2 container (Let it be I2 image)
+- Now, docker creates a container from I2 image (Let it be C3 container)
 
-**9. Use Volumes for Persistent Data**
+> Here, for every instruction docker will create intermediate container and runs next instruction in it and removes that intermediate container
 
-- **Volumes:** Use Docker volumes to persist data outside of the container’s filesystem, ensuring data is not lost when the container is removed or updated.
-- **Bind Mounts:** Use bind mounts for development to sync code changes in real-time.
+- Layers pushes to dockerhub and intermediate containers will get deleted.
 
+> Before pushing to DockerHub, unset environment Variable `unset DOCKER_BUILDKIT`
 
+**Summary**
+- Frequently changing instructions should be bottom of the docker file. So that, we can save build time and memoery of the layers
+- Docker Images are working based on layers
+- Every instruction creates intermediate container and run the next instruction inside it 
+- Then it saves the container as image layer, intermediate container will be deleted 
+- To run next instruction docker creates intermediate container again from this image 
+- It goes on and at each step intermediate container are removed 
+- Each layer is cached and when you push, it pushes the layers 
+- For every extra layer, build time increases and size may also get increases. So, combine commands where possible to reduce the number of layers with `&& \`
 
+**5. Optimize Image Size**
 
+- **Multi-Stage Builds:** Use multi-stage builds to minimize the final image size by separating the build and production phases which includes only necessary components. It will make your Docker image `smaller` and more `efficient` 
+- **Remove Unnecessary Files:** Clean up package lists, cache files, and other unnecessary files to keep the image lean.
 
+**Explanation**
+- Multi-stage Build has things. They are development and running.
+- In java, there are JDK and JRE 
+        - JDK - Java Development Kit 
+        - JRE - Java Runtime environment
+- For development we need some tools. Here, JRE is the subset of JDK. So, development environment is always bigger than runtime environment
+- In java, `.jar` file is the output if build
+- For nodeJS projects, we get node_modules as build. Now, we need our code and node_modules
+- When we run `npm install` command, it will take `package.json` file and creates node_modules directory 
+- When we run `npm install` command, some cache will be created which we don't need. Using Multi-stage we will ignore this cache
+- Multi-Stage builds means, it looks like two dockerfiles inside one docker file
+- One dockerfile we use it for build and we will copy the output of one docker file in second dockerfile
+- Here, build docker file will gets deleted.
 
+**6. Use Dockerignore**
 
-**14. Automated Builds and CI/CD Integration**
+- **.dockerignore File:** `.dockerignore` file tells Docker which files to ignore during the build process. So, include a `.dockerignore` file to prevent unnecessary files and directories from being added to the build context. This helps to keep your image smaller and speeding up the build process and keeping the image clean.
 
-- **CI/CD Pipelines:** Integrate Docker builds into your CI/CD pipelines to automate testing, building, and deployment of images.
-- **Automated Tests:** Write and run automated tests to validate your Docker images before deploying them.
-
-**15. Documentation and Comments**
+**7. Documentation and Comments**
 
 - **Document Dockerfiles:** Comment and document your Dockerfiles to explain the purpose of each instruction, making it easier for others to understand and maintain.
 
 **Other Best Practices**
 These are other best practices we can take care of at orchestration level
 
-**10. Limit Container Resources**
+**8. Leverage Health Checks**
+
+- **Healthcheck:** Define HEALTHCHECK instructions in your Dockerfile to allow Docker to monitor the health of your application and take action if it becomes unhealthy.
+
+**9. Limit Container Resources**
 
 - **Resource Constraints:** Set resource limits (--memory, --cpu-shares, etc.) to prevent a single container from consuming excessive resources on the host.
 
-**11. Network Configuration**
+**10. Network Configuration**
 
 - **Custom Networks:** Use custom networks to isolate containers and manage communication more securely and efficiently.
 - **Service Discovery:** Use Docker's built-in DNS service for container name resolution within custom networks.
 
-**12. Log Management**
+**11. Log Management**
 
 - **Log Drivers:** Configure appropriate log drivers (json-file, syslog, fluentd, etc.) to manage container logs effectively.
 - **Centralized Logging:** Use centralized logging solutions to aggregate and analyze logs from multiple containers and hosts.
 
-**13. Security Best Practices**
+**12. Security Best Practices**
 
 - **Minimal Privileges:** Grant the minimum necessary privileges to your containers.
 - **Regular Updates:** Regularly update base images and dependencies to mitigate vulnerabilities.
 
-**4. Manage Secrets Securely**
+**13. Manage Secrets Securely**
 
 - **Environment Variables:** Avoid hardcoding secrets/settings in your Dockerfile or image. Use environment variables or Docker secrets for sensitive information. This makes your image flexible and easier to use in different environments without needing to change the Dockerfile.
 - **Docker Secrets:** Utilize Docker Swarm or Kubernetes secrets management for secure storage and usage of sensitive data.
 
+**14. Use Volumes for Persistent Data**
+
+- **Volumes:** Use Docker volumes to persist data outside of the container’s filesystem, ensuring data is not lost when the container is removed or updated.
+- **Bind Mounts:** Use bind mounts for development to sync code changes in real-time.
+
+**15. Automated Builds and CI/CD Integration**
+
+- **CI/CD Pipelines:** Integrate Docker builds into your CI/CD pipelines to automate testing, building, and deployment of images.
+- **Automated Tests:** Write and run automated tests to validate your Docker images before deploying them.
 
 By following these best practices, you can ensure that your Docker containers are secure, efficient, and maintainable.
+
+> We restrict docker for image building. For running the images as containers we will use Kubernetes
