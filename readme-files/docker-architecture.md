@@ -26,3 +26,11 @@ Docker’s architecture has several key components that work together to manage 
 
 - **Dockerfile** <br>
  A Dockerfile is a simple text file that contains a series of instructions for building a Docker Image. It tells Docker how to set up the environment inside the container. For example, you can specify which base image to use, what software packages to install, and what command to run when the container starts.
+
+**How Docker Works?**
+- `Docker client` is nothing but a docker command. 
+- `Docker Host/Daemon` defines that docker service is running
+    - `docker run -d -p 80:80 nginx`
+- When we give docker command, it will connect to docker daemon. 
+- Then docker daemon checks whether image exist local or not, if exist it will run. 
+- If not exist, it will pull from docker registry/hub. Then, it will create a container out of it and runs it and sends the output to the client 
