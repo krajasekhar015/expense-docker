@@ -34,3 +34,11 @@ Docker’s architecture has several key components that work together to manage 
 - When we give docker command, it will connect to docker daemon. 
 - Then docker daemon checks whether image exist local or not, if exist it will run. 
 - If not exist, it will pull from docker registry/hub. Then, it will create a container out of it and runs it and sends the output to the client 
+
+**Advantages of Docker:** <br>
+- **Portability:** <br>
+ Docker containers run the same way in any environment, making it easy to move applications from development to production.
+- **Efficiency:** <br>
+ Containers are lightweight and share the host OS, reducing overhead and making them faster than traditional VMs.
+- **Scalability:** <br>
+ Docker integrates well with tools like Kubernetes, making it easier to scale applications across multiple servers.
