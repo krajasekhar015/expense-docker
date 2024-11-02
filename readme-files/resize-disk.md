@@ -10,6 +10,10 @@ lsblk
 ```
 sudo growpart /dev/nvme0n1 4
 ```
+or 
+```
+sudo growpart /dev/xvda 4
+```
 Here,
 * `growpart` is a command-line utility that is part of the `cloud-guest-utils` package. It is specifically designed to resize existing partition to fill the available space
 * `/dev/nvme0n1` specifies the disk where the partition you want to resize is located. `nvme0n1` indicates the first NVMe disk. NVMe (Non-Volatile Memory Express) is a high-speed interface used for SSDs
